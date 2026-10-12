@@ -1,0 +1,30 @@
+name: refresh-threads-token
+
+on:
+  schedule:
+    - cron: "17 3 1 * *" # 1st of every month, well inside the 60-day token life
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Refresh the Threads token
+        run: node poster.js refresh --out "$RUNNER_TEMP/token.txt"
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+
+      - name: Store the new token as a repository secret
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          echo "::add-mask::$(cat "$RUNNER_TEMP/token.txt")"
+          gh secret set THREADS_ACCESS_TOKEN --repo "$GITHUB_REPOSITORY" < "$RUNNER_TEMP/token.txt"
+          rm -f "$RUNNER_TEMP/token.txt"

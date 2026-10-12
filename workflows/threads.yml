@@ -1,0 +1,44 @@
+name: threads-poster
+
+on:
+  schedule:
+    # Every 15 minutes, only during the posting windows:
+    # 00:00-04:59 UTC = 07:00-11:59 WIB and 10:00-14:59 UTC = 17:00-21:59 WIB.
+    - cron: "*/15 0-4,10-14 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: threads-poster
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Publish due posts
+        run: node poster.js run
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+
+      - name: Save queue state
+        if: always()
+        run: |
+          git config user.name "threads-poster"
+          git config user.email "actions@users.noreply.github.com"
+          git add queue.json
+          if ! git diff --staged --quiet; then
+            git commit -m "update queue"
+            git pull --rebase
+            git push
+          fi
