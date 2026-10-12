@@ -179,24 +179,8 @@ async function runQueue({ dryRun = false } = {}) {
   const maxPerRun = Number(process.env.MAX_PER_RUN || 5);
   const gapMs = Number(process.env.GAP_SECONDS || 10) * 1000;
 
-  // Posts that are far overdue (outage, late setup) are skipped instead of flooding the account.
-  const lateHours = Number(process.env.MAX_LATE_HOURS || 12);
-  const isLate = (item) => {
-    if ((item.status || "pending") !== "pending" || !item.publishAt) return false;
-    const when = Date.parse(item.publishAt);
-    return !Number.isNaN(when) && now - when > lateHours * 3600 * 1000;
-  };
-  const late = queue.filter(isLate);
-  if (late.length) {
-    console.log(`${late.length} post(s) are more than ${lateHours}h overdue and will be skipped.`);
-    if (!dryRun) {
-      for (const item of late) Object.assign(item, { status: "skipped", skippedAt: new Date(now).toISOString() });
-      saveQueue(queue);
-    }
-  }
-
   const due = queue
-    .filter((item) => !isLate(item) && isDue(item, now))
+    .filter((item) => isDue(item, now))
     .sort((a, b) => (Date.parse(a.publishAt) || 0) - (Date.parse(b.publishAt) || 0))
     .slice(0, maxPerRun);
 
@@ -260,14 +244,13 @@ async function cmdExchange(show) {
   if (show) console.log(res.access_token);
 }
 
-async function cmdRefresh(show, out) {
+async function cmdRefresh(show) {
   const res = await api("GET", "/refresh_access_token", {
     grant_type: "th_refresh_token",
     access_token: need("THREADS_ACCESS_TOKEN"),
   });
   saveEnvValue("THREADS_ACCESS_TOKEN", res.access_token);
   console.log(`Token refreshed and saved to .env (valid about ${Math.round(res.expires_in / 86400)} days).`);
-  if (out) fs.writeFileSync(out, res.access_token, { mode: 0o600 });
   if (show) console.log(res.access_token);
 }
 
@@ -290,23 +273,6 @@ async function cmdLimit() {
   const d = Array.isArray(res.data) ? res.data[0] : res;
   const total = d.config ? d.config.quota_total : 250;
   console.log(`Published ${d.quota_usage} of ${total} allowed posts in the last 24 hours.`);
-}
-
-function cmdStatus() {
-  const queue = loadQueue();
-  const counts = {};
-  for (const item of queue) {
-    const status = item.status || "pending";
-    counts[status] = (counts[status] || 0) + 1;
-  }
-  console.log(`Queue: ${queue.length} posts. ${Object.entries(counts).map(([k, v]) => `${k}: ${v}`).join(", ")}`);
-  const upcoming = queue
-    .filter((item) => (item.status || "pending") === "pending" && Date.parse(item.publishAt) > Date.now())
-    .sort((a, b) => Date.parse(a.publishAt) - Date.parse(b.publishAt))
-    .slice(0, 3);
-  for (const item of upcoming) console.log(`Next: ${item.publishAt}  ${String(item.text).slice(0, 60)}`);
-  const last = queue.filter((item) => item.publishAt).map((item) => item.publishAt).sort().pop();
-  if (last) console.log(`Queue runs until: ${last}`);
 }
 
 // Steam's store API is public: no login or key needed.
@@ -336,7 +302,7 @@ function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === "--dry-run" || arg === "--show") flags[arg.slice(2)] = true;
-    else if (arg === "--topic" || arg === "--link" || arg === "--image" || arg === "--out") flags[arg.slice(2)] = argv[++i];
+    else if (arg === "--topic" || arg === "--link" || arg === "--image") flags[arg.slice(2)] = argv[++i];
     else rest.push(arg);
   }
   return { flags, rest };
@@ -349,7 +315,6 @@ function usage() {
   node poster.js whoami
   node poster.js limit
   node poster.js post "text" [--topic TAG] [--link URL | --image URL] [--dry-run]
-  node poster.js status
   node poster.js steam "game name or appid"
   node poster.js run [--dry-run]`);
 }
@@ -367,11 +332,9 @@ async function main() {
     case "exchange":
       return cmdExchange(flags.show);
     case "refresh":
-      return cmdRefresh(flags.show, flags.out);
+      return cmdRefresh(flags.show);
     case "whoami":
       return cmdWhoami();
-    case "status":
-      return cmdStatus();
     case "steam":
       return cmdSteam(rest.join(" "));
     case "limit":
