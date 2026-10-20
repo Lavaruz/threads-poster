@@ -137,7 +137,9 @@
     "text": "unpopular opinion: ngejar angka besar di game bikin lo belajar sabar lebih banyak daripada seminar motivasi manapun",
     "publishAt": "2026-10-20T19:59:00+07:00",
     "topic": "Gaming",
-    "status": "pending"
+    "status": "pending",
+    "attempts": 1,
+    "lastError": "The requested resource does not exist"
   },
   {
     "text": "tim mana kalian? A. nonton video panjang sambil rebahan. B. nonton pas ada waktu luang tapi tetep tamat. gue tim A, jangan tanya kenapa",
