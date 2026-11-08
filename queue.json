@@ -449,7 +449,9 @@
   {
     "text": "hot take: minggu malam itu bukan waktunya cemas, tapi waktunya nyiapin hal kecil biar senin lebih ringan",
     "publishAt": "2026-11-08T19:58:00+07:00",
-    "status": "pending"
+    "status": "pending",
+    "attempts": 1,
+    "lastError": "The requested resource does not exist"
   },
   {
     "text": "gue baru sadar, hidup gue isinya nungguin: nunggu render, nunggu upload, nunggu angka naik. latihan sabar yang nggak diminta",
