@@ -449,14 +449,18 @@
   {
     "text": "hot take: minggu malam itu bukan waktunya cemas, tapi waktunya nyiapin hal kecil biar senin lebih ringan",
     "publishAt": "2026-11-08T19:58:00+07:00",
-    "status": "pending",
+    "status": "skipped",
     "attempts": 1,
-    "lastError": "The requested resource does not exist"
+    "lastError": "The requested resource does not exist",
+    "skippedAt": "2026-11-09T04:42:49.785Z"
   },
   {
     "text": "gue baru sadar, hidup gue isinya nungguin: nunggu render, nunggu upload, nunggu angka naik. latihan sabar yang nggak diminta",
     "publishAt": "2026-11-09T08:33:00+07:00",
-    "status": "pending"
+    "status": "posted",
+    "postedAt": "2026-11-09T04:42:59.883Z",
+    "threadsId": "18057930368800249",
+    "permalink": "https://www.threads.com/@the.grindora/post/Dfgf9LADnv2"
   },
   {
     "text": "lagu apa yang lagi kalian puter berulang ulang minggu ini? gue butuh amunisi playlist",
