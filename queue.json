@@ -505,7 +505,9 @@
   {
     "text": "hot take: konten yang jujur dan apa adanya lebih gampang bikin orang ngerasa dekat",
     "publishAt": "2026-11-12T09:29:00+07:00",
-    "status": "pending"
+    "status": "pending",
+    "attempts": 1,
+    "lastError": "The requested resource does not exist"
   },
   {
     "text": "tiap ada yang bilang \"enak ya kerjaannya main game\", gue pengen ngajak dia ngedit 90 menit footage sendirian terus liat ekspresinya",
