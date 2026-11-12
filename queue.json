@@ -505,15 +505,19 @@
   {
     "text": "hot take: konten yang jujur dan apa adanya lebih gampang bikin orang ngerasa dekat",
     "publishAt": "2026-11-12T09:29:00+07:00",
-    "status": "pending",
+    "status": "posted",
     "attempts": 1,
-    "lastError": "The requested resource does not exist"
+    "postedAt": "2026-11-12T14:00:17.765Z",
+    "threadsId": "18355137127268963",
+    "permalink": "https://www.threads.com/@the.grindora/post/DfpOHkvFUPM"
   },
   {
     "text": "tiap ada yang bilang \"enak ya kerjaannya main game\", gue pengen ngajak dia ngedit 90 menit footage sendirian terus liat ekspresinya",
     "publishAt": "2026-11-12T19:33:00+07:00",
     "topic": "Gaming",
-    "status": "pending"
+    "status": "pending",
+    "attempts": 1,
+    "lastError": "The requested resource does not exist"
   },
   {
     "text": "pagi ini gue nulis daftar hal yang harus beres sebelum weekend. daftarnya panjang, sama kayak harapan gue",
