@@ -703,14 +703,18 @@
   {
     "text": "kalian pernah nggak sih ngerasa pagi pagi lebih jernih mikirnya, tapi malah dipake buat scroll",
     "publishAt": "2026-11-24T09:29:00+07:00",
-    "status": "pending",
+    "status": "skipped",
     "attempts": 1,
-    "lastError": "The requested resource does not exist"
+    "lastError": "The requested resource does not exist",
+    "skippedAt": "2026-11-24T20:29:11.816Z"
   },
   {
     "text": "nonton video sambil tidur itu valid. gue malah seneng kalo video gue dipake buat temen tidur, itu artinya suaranya nyaman",
     "publishAt": "2026-11-24T20:27:00+07:00",
-    "status": "pending"
+    "status": "posted",
+    "postedAt": "2026-11-24T20:29:25.301Z",
+    "threadsId": "18179128978449515",
+    "permalink": "https://www.threads.com/@the.grindora/post/DgI0LyDI1PU"
   },
   {
     "text": "jam berapa biasanya kalian paling betah di depan layar? gue mau tau jam rawan kalian",
