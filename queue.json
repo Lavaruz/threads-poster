@@ -703,7 +703,9 @@
   {
     "text": "kalian pernah nggak sih ngerasa pagi pagi lebih jernih mikirnya, tapi malah dipake buat scroll",
     "publishAt": "2026-11-24T09:29:00+07:00",
-    "status": "pending"
+    "status": "pending",
+    "attempts": 1,
+    "lastError": "The requested resource does not exist"
   },
   {
     "text": "nonton video sambil tidur itu valid. gue malah seneng kalo video gue dipake buat temen tidur, itu artinya suaranya nyaman",
